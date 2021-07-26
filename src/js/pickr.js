@@ -359,6 +359,7 @@ export default class Pickr {
                     // Update color
                     this.element.style.background = `rgba(0, 0, 0, ${color.a})`;
                     components.palette.trigger();
+                    inst._root.opacityinput.value = parseInt(color.a * 100);
                 }
             }),
 
@@ -424,7 +425,36 @@ export default class Pickr {
                 _root.hue.picker,
                 _root.opacity.slider,
                 _root.opacity.picker
-            ], ['mousedown', 'touchstart'], () => this._recalc = true, {passive: true})
+            ], ['mousedown', 'touchstart'], () => this._recalc = true, {passive: true}),
+
+            // 输入透明度，修改时'keyup', 'input'事件会分别触发一次
+            _.on(_root.opacityinput, ['keyup', 'input'], e => {
+                console.log("opacity input change", e);
+                let v = Math.max(0, Math.min(1, parseFloat(e.target.value)/100));
+                // Fire listener if initialization is finish and changed color was valid
+                if (!this.options.components.opacity || !this.options.components.palette) {
+                    return;
+                }
+
+                const color = this.getColor();
+
+                // Calculate opacity
+                if (this._recalc) {
+                    color.a = Math.round(v * 1e2) / 100;
+                }
+
+                // 这个update会调用opacity: Moveable 的onChange
+                this._components.opacity.update(color.a);
+                
+                this._emit('changestop', 'input', this);
+                
+                e.stopImmediatePropagation();
+            }),
+            // 使用select选中颜色模式
+            _.on(_root.interaction.select, 'change', e => {
+                this._representation = e.target.value.toUpperCase();
+                this.setColorRepresentation(this._representation);
+            })
         ];
 
         // Provide hiding / showing abilities only if showAlways is false
@@ -793,6 +823,9 @@ export default class Pickr {
         opacity.update(a);
         palette.update(s / 100, 1 - (v / 100));
 
+        // 设置opacity input的透明值
+        this._root.opacityinput.value = parseInt(a * 100);
+
         // Check if call is silent
         if (!silent) {
             this.applyColor();
@@ -833,11 +866,14 @@ export default class Pickr {
             const utype = type.toUpperCase();
             const {options} = this._root.interaction;
             const target = options.find(el => el.getAttribute('data-type') === utype);
+            console.log("options", options)
 
             // Auto select only if not hidden
             if (target && !target.hidden) {
                 for (const el of options) {
+                    // 设置选中的颜色模式class为active
                     el.classList[el === target ? 'add' : 'remove']('active');
+                    console.log("el.classList", el.classList)
                 }
             }
 
@@ -865,6 +901,7 @@ export default class Pickr {
         type = type.toUpperCase();
 
         // Find button with given type and trigger click event
+        // 找到选中颜色模式按钮并触发点击
         return !!this._root.interaction.options
             .find(v => v.getAttribute('data-type').startsWith(type) && !v.click());
     }

@@ -43,11 +43,24 @@ export default instance => {
             </div>
           </div>
 
-          <div class="pcr-swatches ${components.palette ? '' : 'pcr-last'}" :ref="swatches"></div>
+          <div class="pcr-color-opacity-input" ${hidden(components.opacity)}>
+            <span>Opacity</span>
+            <input :ref="opacityinput" aria-label="${t('aria:opacity', 'opacity selection slider')}">
+            <span class="append">%</span>
+          </div>
+
+          <div class="pcr-swatches ${components.palette ? '' : 'pcr-last'}" :ref="swatches">
+            <input :ref="add" class="pcr-save" value="${t('btn:save')}" type="button" ${hidden(components.interaction.save)} aria-label="${t('aria:btn:save')}">
+          </div>
 
           <div :obj="interaction" class="pcr-interaction" ${hidden(Object.keys(components.interaction).length)}>
             <input :ref="result" class="pcr-result" type="text" spellcheck="false" ${hidden(components.interaction.input)} aria-label="${t('aria:input', 'color input field')}">
 
+            <select :ref="select">
+              <option value="${lockOpacity ? 'HEX' : 'HEXA'}">HEXA</option>
+              <option value="${lockOpacity ? 'RGB' : 'RGBA'}">RGBA</option>
+              <option value="CMYK">CMYK</option>
+            </select>
             <input :arr="options" class="pcr-type" data-type="HEXA" value="${lockOpacity ? 'HEX' : 'HEXA'}" type="button" ${hidden(components.interaction.hex)}>
             <input :arr="options" class="pcr-type" data-type="RGBA" value="${lockOpacity ? 'RGB' : 'RGBA'}" type="button" ${hidden(components.interaction.rgba)}>
             <input :arr="options" class="pcr-type" data-type="HSLA" value="${lockOpacity ? 'HSL' : 'HSLA'}" type="button" ${hidden(components.interaction.hsla)}>
@@ -57,6 +70,8 @@ export default instance => {
             <input :ref="save" class="pcr-save" value="${t('btn:save')}" type="button" ${hidden(components.interaction.save)} aria-label="${t('aria:btn:save')}">
             <input :ref="cancel" class="pcr-cancel" value="${t('btn:cancel')}" type="button" ${hidden(components.interaction.cancel)} aria-label="${t('aria:btn:cancel')}">
             <input :ref="clear" class="pcr-clear" value="${t('btn:clear')}" type="button" ${hidden(components.interaction.clear)} aria-label="${t('aria:btn:clear')}">
+
+            <input :ref="dropper" class="pcr-dropper" value="${t('btn:dropper')}" type="button" ${hidden(components.interaction.dropper)} aria-label="${t('aria:btn:dropper')}">
           </div>
         </div>
       </div>

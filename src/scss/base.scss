@@ -60,7 +60,8 @@
 .pickr,
 .pcr-app {
 
-    * {
+    // 去掉select的样式定义
+    *:not(select) {
         box-sizing: border-box;
         outline: none;
         border: none;
@@ -120,15 +121,15 @@
         @supports (display: grid) {
             display: grid;
             align-items: center;
-            grid-template-columns: repeat(auto-fit, 1.75em);
+            grid-template-columns: repeat(auto-fit, 1.62em);
         }
 
         > button {
             @include transparency-background(6px);
             font-size: 1em;
             position: relative;
-            width: calc(1.75em - 5px);
-            height: calc(1.75em - 5px);
+            width: calc(1.62em - 5px);
+            height: calc(1.62em - 5px);
             border-radius: 0.15em;
             cursor: pointer;
             margin: 2.5px;
@@ -188,9 +189,10 @@
                 filter: brightness(0.975);
             }
 
-            &:focus {
+            // 去掉激活样式
+            /*&:focus {
                 @include focus();
-            }
+            }*/
         }
 
         .pcr-result {
@@ -243,6 +245,22 @@
                 @include focus(rgba($palette-soft-red, 0.75));
             }
         }
+
+        select {
+            // 去掉外框
+            outline: none;
+            border: none;
+            border-radius: 2px;
+            width: 80px;
+            height: 25px;
+            background-color: #464d52;
+            color: #bbbdc3;
+            font-size: 11px;
+            text-align-last: center;
+
+            padding: 0.45em 0.5em;
+            margin-top: 0.75em;
+        }
     }
 
     .pcr-selection {
@@ -272,6 +290,46 @@
                 cursor: -moz-grabbing;
                 cursor: -webkit-grabbing;
             }
+        }
+    }
+
+    /* 输入透明度值*/
+    .pcr-color-opacity-input {
+        padding: 10px 10px 0 63px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        position: relative;
+
+        span {
+            flex: 1;
+            height: 24px;
+            line-height: 24px;
+            color: #bbbdc3;
+            font-size: 13px;
+        }
+
+        input {
+            width: 50px;
+            padding: 0 3px;
+            height: 24px;
+            line-height: 24px;
+            background-color: #464d52;
+            color: #bbbdc3;
+            border: 1px solid #bbbdc3;
+            outline: none;
+            border-radius: 0.15em;
+            -webkit-appearance: none;
+            -moz-appearance: textfield;
+        }
+        .append {
+            font-size: 10px;
+            line-height: 24px;
+            color: #b2b4b3;
+            margin-left: -16px;
+            position: absolute;
+            right: 13px;
+            top: 10px;
         }
     }
 }
