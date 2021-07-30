@@ -32,7 +32,9 @@ const themes = [
                     hsva: true,
                     input: true,
                     clear: true,
-                    save: true
+                    save: true,
+                    add: true,
+                    dropper: "dropper",
                 }
             }
         }
@@ -62,7 +64,8 @@ const themes = [
                     hsva: false,
                     input: true,
                     clear: true,
-                    save: true
+                    save: true,
+                    add: true,
                 }
             }
         }
@@ -96,7 +99,9 @@ const themes = [
                     hsva: false,
                     input: true,
                     clear: true,
-                    save: true
+                    save: true,
+                    add: true,
+                    dropper: "dropper",
                 }
             }
         }

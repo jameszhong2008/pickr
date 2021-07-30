@@ -25,6 +25,7 @@ export default class Pickr {
         'btn:save': 'Save',
         'btn:cancel': 'Cancel',
         'btn:clear': 'Clear',
+        'btn:add': '+',
 
         // Strings used for aria-labels
         'aria:btn:save': 'save and close',
@@ -97,7 +98,8 @@ export default class Pickr {
         change: [],
         changestop: [],
         cancel: [],
-        swatchselect: []
+        swatchselect: [],
+        dropper: [],
     };
 
     constructor(opt) {
@@ -427,6 +429,12 @@ export default class Pickr {
                 _root.opacity.picker
             ], ['mousedown', 'touchstart'], () => this._recalc = true, {passive: true}),
 
+            // 增加自定义颜色
+            _.on(_root.add, 'click', () => {
+                //'rgba(244, 67, 54, 1)'
+                this.addSwatch(this.getColor().toRGBA().toString(0));
+            }),
+
             // 输入透明度，修改时'keyup', 'input'事件会分别触发一次
             _.on(_root.opacityinput, ['keyup', 'input'], e => {
                 console.log("opacity input change", e);
@@ -454,7 +462,12 @@ export default class Pickr {
             _.on(_root.interaction.select, 'change', e => {
                 this._representation = e.target.value.toUpperCase();
                 this.setColorRepresentation(this._representation);
-            })
+            }),
+
+            // 增加dropper按钮事件
+            _.on(_root.interaction.dropper, 'click', () => {
+                this._emit('dropper', null);
+            }),
         ];
 
         // Provide hiding / showing abilities only if showAlways is false
@@ -657,7 +670,8 @@ export default class Pickr {
             );
 
             // Append element and save swatch data
-            _root.swatches.appendChild(el);
+            // 放在增加按钮之前
+            _root.swatches.insertBefore(el, _root.add)
             _swatchColors.push({el, color});
 
             // Bind event

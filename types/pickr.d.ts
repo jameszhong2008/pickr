@@ -88,6 +88,8 @@ declare namespace Pickr {
                 cancel?: boolean;
                 clear?: boolean;
                 save?: boolean;
+                add?: boolean;
+                dropper?: string;
             };
         };
 
@@ -141,6 +143,7 @@ declare namespace Pickr {
         'change' |
         'changestop' |
         'cancel' |
+        'dropper' |
         'swatchselect';
 
     type Theme = 'classic' | 'monolith' | 'nano';

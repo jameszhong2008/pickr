@@ -161,6 +161,14 @@
                 box-shadow: none;
             }
         }
+
+        .pcr-add {
+            font-size: 1em;
+            width: calc(1.62em - 5px);
+            height: calc(1.62em - 5px);
+            border-radius: 0.15em;
+            margin: 2.5px;
+        }
     }
 
     .pcr-interaction {
@@ -246,6 +254,7 @@
             }
         }
 
+        // 选择颜色模式select
         select {
             // 去掉外框
             outline: none;
@@ -258,6 +267,15 @@
             font-size: 11px;
             text-align-last: center;
 
+            padding: 0.45em 0.5em;
+            margin-top: 0.75em;
+        }
+
+        // 吸管功能
+        .pcr-dropper {
+            background: #000;  
+            width: 25px;          
+            
             padding: 0.45em 0.5em;
             margin-top: 0.75em;
         }
@@ -313,14 +331,14 @@
             width: 50px;
             padding: 0 3px;
             height: 24px;
+            border-radius: 0.2em;
             line-height: 24px;
             background-color: #464d52;
             color: #bbbdc3;
             border: 1px solid #bbbdc3;
-            outline: none;
-            border-radius: 0.15em;
+            outline: none;            
             -webkit-appearance: none;
-            -moz-appearance: textfield;
+            -moz-appearance: textfield;            
         }
         .append {
             font-size: 10px;

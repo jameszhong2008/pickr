@@ -50,7 +50,7 @@ export default instance => {
           </div>
 
           <div class="pcr-swatches ${components.palette ? '' : 'pcr-last'}" :ref="swatches">
-            <input :ref="add" class="pcr-save" value="${t('btn:save')}" type="button" ${hidden(components.interaction.save)} aria-label="${t('aria:btn:save')}">
+            <input :ref="add" class="pcr-add" value="${t('btn:add')}" type="button" ${hidden(components.interaction.add)} aria-label="${t('aria:btn:add')}">
           </div>
 
           <div :obj="interaction" class="pcr-interaction" ${hidden(Object.keys(components.interaction).length)}>
@@ -71,7 +71,7 @@ export default instance => {
             <input :ref="cancel" class="pcr-cancel" value="${t('btn:cancel')}" type="button" ${hidden(components.interaction.cancel)} aria-label="${t('aria:btn:cancel')}">
             <input :ref="clear" class="pcr-clear" value="${t('btn:clear')}" type="button" ${hidden(components.interaction.clear)} aria-label="${t('aria:btn:clear')}">
 
-            <input :ref="dropper" class="pcr-dropper" value="${t('btn:dropper')}" type="button" ${hidden(components.interaction.dropper)} aria-label="${t('aria:btn:dropper')}">
+            <input :ref="dropper" class="pcr-dropper" data-src="${components.interaction.dropper}" type="button" ${hidden(components.interaction.dropper != undefined)} aria-label="${t('aria:btn:dropper')}">
           </div>
         </div>
       </div>
