@@ -71,7 +71,9 @@ export default instance => {
             <input :ref="cancel" class="pcr-cancel" value="${t('btn:cancel')}" type="button" ${hidden(components.interaction.cancel)} aria-label="${t('aria:btn:cancel')}">
             <input :ref="clear" class="pcr-clear" value="${t('btn:clear')}" type="button" ${hidden(components.interaction.clear)} aria-label="${t('aria:btn:clear')}">
 
-            <input :ref="dropper" class="pcr-dropper" data-src="${components.interaction.dropper}" type="button" ${hidden(components.interaction.dropper != undefined)} aria-label="${t('aria:btn:dropper')}">
+            <div :ref="dropper" class="pcr-dropper" type="button" ${hidden(components.interaction.dropper != undefined)} aria-label="${t('aria:btn:dropper')}">
+              <div :ref="dropperInner" class="pcr-dropper-inner" data-src="${components.interaction.dropper}"/>
+            </div>
           </div>
         </div>
       </div>

@@ -880,14 +880,12 @@ export default class Pickr {
             const utype = type.toUpperCase();
             const {options} = this._root.interaction;
             const target = options.find(el => el.getAttribute('data-type') === utype);
-            console.log("options", options)
-
+            
             // Auto select only if not hidden
             if (target && !target.hidden) {
                 for (const el of options) {
                     // 设置选中的颜色模式class为active
                     el.classList[el === target ? 'add' : 'remove']('active');
-                    console.log("el.classList", el.classList)
                 }
             }
 
