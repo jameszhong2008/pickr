@@ -100,6 +100,7 @@ export default class Pickr {
         cancel: [],
         swatchselect: [],
         dropper: [],
+        info: [],
     };
 
     constructor(opt) {
@@ -379,6 +380,35 @@ export default class Pickr {
         this._components = components;
     }
 
+    _toBriefColor(color) {
+        // 不是HEX
+        if(color.indexOf(",") !== -1) {
+            color = color.trim();
+            if(color.startsWith("cmyk(") || color.startsWith("rgba(")) {
+                color = color.substr(5);
+            }
+            
+            if(color.endsWith(")")) {
+                color = color.substr(0, color.length - 1);
+            }
+        }
+        return color;
+    }
+
+    // 只支持rgba和cmyk
+    _toFullColor(color) {
+        // 不是HEX
+        if(color.indexOf(",") !== -1 && color.indexOf("cmyk(") === -1 && color.indexOf("rgba(") === -1) {
+            if(color.indexOf("%") !== -1) {
+                return `cmyk(${color})`;
+            }
+            else {
+                return `rgba(${color})`;
+            }
+        }
+        return color;
+    }
+
     _bindEvents() {
         const {_root, options} = this;
 
@@ -405,7 +435,7 @@ export default class Pickr {
             _.on(_root.interaction.result, ['keyup', 'input'], e => {
 
                 // Fire listener if initialization is finish and changed color was valid
-                if (this.setColor(e.target.value, true) && !this._initializingActive) {
+                if (this.setColor(this._toFullColor(e.target.value), true) && !this._initializingActive) {
                     this._emit('change', this._color, 'input', this);
                     this._emit('changestop', 'input', this);
                 }
@@ -431,13 +461,26 @@ export default class Pickr {
 
             // 增加自定义颜色
             _.on(_root.add, 'click', () => {
-                //'rgba(244, 67, 54, 1)'
-                this.addSwatch(this.getColor().toRGBA().toString(0));
+                let color = this.getColor().toHEXA().toString(0);
+                // 判断自定义颜色是否存在
+                let exist = this.options.swatches.some(v => {
+                    const {values} = this._parseLocalColor(v);
+                    const hsvColor = HSVaColor(...values);
+                    return (hsvColor.toHEXA().toString(0) === color);
+                })
+                
+                if (!exist) {
+                    this.addSwatch(color);
+                    // 增加options中颜色用于保存
+                    this.options.swatches.push(color)
+                }
+                else {
+                    this._emit('info', {code: 'CUSTOM_COLOR_EXIST', message: "Custom color exist."});
+                }
             }),
 
             // 输入透明度，修改时'keyup', 'input'事件会分别触发一次
             _.on(_root.opacityinput, ['keyup', 'input'], e => {
-                console.log("opacity input change", e);
                 let v = Math.max(0, Math.min(1, parseFloat(e.target.value)/100));
                 // Fire listener if initialization is finish and changed color was valid
                 if (!this.options.components.opacity || !this.options.components.palette) {
@@ -490,6 +533,27 @@ export default class Pickr {
                 }, {capture: true})
             );
         }
+
+        // 删除当前焦点自定义颜色
+        eventBindings.push(
+            _.on(document, 'keyup', e => {
+                const dk = 'Delete';
+                const dk2 = 'Backspace';
+                if(
+                    document.activeElement &&
+                    document.activeElement.getAttribute("aria-label") === this._t('btn:swatch') &&
+                    (e.key === dk || e.code === dk || e.key === dk2 || e.code === dk2)
+                ) {
+                    this._swatchColors.some((v, index) => {
+                        let active = v.el === document.activeElement;
+                        if(active) {
+                            this.removeSwatch(index);
+                        }
+                        return active;
+                    })
+                }
+            })
+        );
 
         // Make input adjustable if enabled
         if (options.adjustableNumbers) {
@@ -578,8 +642,8 @@ export default class Pickr {
 
             // Construct function name and call if present
             const method = `to${_root.interaction.type().getAttribute('data-type')}`;
-            _root.interaction.result.value = typeof _color[method] === 'function' ?
-                _color[method]().toString(options.outputPrecision) : '';
+            _root.interaction.result.value = this._toBriefColor(typeof _color[method] === 'function' ?
+                _color[method]().toString(options.outputPrecision) : '');
         }
 
         // Fire listener if initialization is finish
@@ -683,6 +747,7 @@ export default class Pickr {
                 })
             );
 
+            _root.add.style.display = _swatchColors.length < 16? "block" : "none";
             return true;
         }
 
@@ -704,6 +769,11 @@ export default class Pickr {
             // Remove HTML child and swatch data
             this._root.swatches.removeChild(el);
             this._swatchColors.splice(index, 1);
+
+            // 删除options中颜色用于保存
+            this.options.swatches.splice(index, 1);
+
+            this._root.add.style.display = this._swatchColors.length < 16? "block" : "none";
             return true;
         }
 

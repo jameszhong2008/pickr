@@ -144,6 +144,7 @@ declare namespace Pickr {
         'changestop' |
         'cancel' |
         'dropper' |
+        'info' |
         'swatchselect';
 
     type Theme = 'classic' | 'monolith' | 'nano';

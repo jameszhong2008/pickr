@@ -121,15 +121,15 @@
         @supports (display: grid) {
             display: grid;
             align-items: center;
-            grid-template-columns: repeat(auto-fit, 1.62em);
+            grid-template-columns: repeat(auto-fit, 1.88em);
         }
 
         > button {
             @include transparency-background(6px);
             font-size: 1em;
             position: relative;
-            width: calc(1.62em - 5px);
-            height: calc(1.62em - 5px);
+            width: calc(1.88em - 5px);
+            height: calc(1.88em - 5px);
             border-radius: 0.15em;
             cursor: pointer;
             margin: 2.5px;
@@ -164,8 +164,8 @@
 
         .pcr-add {
             font-size: 1em;
-            width: calc(1.62em - 5px);
-            height: calc(1.62em - 5px);
+            width: calc(1.88em - 5px);
+            height: calc(1.88em - 5px);
             border-radius: 0.15em;
             margin: 2.5px;
             background-color: #464d52;
@@ -262,7 +262,7 @@
             outline: none;
             border: none;
             border-radius: 0.2em;
-            width: 65px;
+            width: 66px;
             height: 25px;
             background-color: #464d52;
             color: #bbbdc3;
@@ -277,7 +277,7 @@
         .pcr-dropper {
             background: #464d52;
             border: 1px solid #bbbdc3;
-            width: 28px; 
+            width: 25px; 
             height: 25px;
             font-size: 0.75em;
             

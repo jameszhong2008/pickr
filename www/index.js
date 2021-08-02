@@ -98,8 +98,8 @@ const themes = [
                     rgba: false,
                     hsva: false,
                     input: true,
-                    clear: true,
-                    save: true,
+                    clear: false,
+                    save: false,
                     add: true,
                     dropper: "dropper",
                 }
