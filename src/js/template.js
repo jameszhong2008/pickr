@@ -44,9 +44,14 @@ export default instance => {
           </div>
 
           <div class="pcr-color-opacity-input" ${hidden(components.opacity)}>
-            <span>Opacity</span>
-            <input :ref="opacityinput" aria-label="${t('aria:opacity', 'opacity selection slider')}">
-            <span class="append">%</span>
+            <span>Opacity: </span>
+            <div class="opacity-input">
+              <input :ref="opacityinput" aria-label="${t('aria:opacity', 'opacity selection slider')}"/>
+              <span class="append">%</span>
+            </div>
+            <div :ref="dropper" class="pcr-dropper" type="button" ${hidden(components.interaction.dropper != undefined)} aria-label="${t('aria:btn:dropper')}">
+              <div :ref="dropperInner" class="pcr-dropper-inner" data-src="${components.interaction.dropper}" ></div>
+            </div>
           </div>
 
           <div class="pcr-swatches ${components.palette ? '' : 'pcr-last'}" :ref="swatches">
@@ -70,10 +75,6 @@ export default instance => {
             <input :ref="save" class="pcr-save" value="${t('btn:save')}" type="button" ${hidden(components.interaction.save)} aria-label="${t('aria:btn:save')}">
             <input :ref="cancel" class="pcr-cancel" value="${t('btn:cancel')}" type="button" ${hidden(components.interaction.cancel)} aria-label="${t('aria:btn:cancel')}">
             <input :ref="clear" class="pcr-clear" value="${t('btn:clear')}" type="button" ${hidden(components.interaction.clear)} aria-label="${t('aria:btn:clear')}">
-
-            <div :ref="dropper" class="pcr-dropper" type="button" ${hidden(components.interaction.dropper != undefined)} aria-label="${t('aria:btn:dropper')}">
-              <div :ref="dropperInner" class="pcr-dropper-inner" data-src="${components.interaction.dropper}"/>
-            </div>
           </div>
         </div>
       </div>

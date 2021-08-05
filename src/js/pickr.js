@@ -57,6 +57,7 @@ export default class Pickr {
 
         i18n: {},
         swatches: null,
+        swatchesNum: 18,
         inline: false,
         sliders: null,
 
@@ -508,7 +509,7 @@ export default class Pickr {
             }),
 
             // 增加dropper按钮事件
-            _.on(_root.interaction.dropper, 'click', () => {
+            _.on(_root.dropper, 'click', () => {
                 this._emit('dropper', null);
             }),
         ];
@@ -747,7 +748,7 @@ export default class Pickr {
                 })
             );
 
-            _root.add.style.display = _swatchColors.length < 16? "block" : "none";
+            _root.add.style.display = _swatchColors.length < this.options.swatchesNum? "block" : "none";
             return true;
         }
 
@@ -773,7 +774,7 @@ export default class Pickr {
             // 删除options中颜色用于保存
             this.options.swatches.splice(index, 1);
 
-            this._root.add.style.display = this._swatchColors.length < 16? "block" : "none";
+            this._root.add.style.display = this._swatchColors.length < this.options.swatchesNum? "block" : "none";
             return true;
         }
 

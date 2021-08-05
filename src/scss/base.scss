@@ -121,16 +121,16 @@
         @supports (display: grid) {
             display: grid;
             align-items: center;
-            grid-template-columns: repeat(auto-fit, 1.88em);
+            grid-template-columns: repeat(auto-fit, 1.65em);
         }
 
         > button {
             @include transparency-background(6px);
             font-size: 1em;
             position: relative;
-            width: calc(1.88em - 5px);
-            height: calc(1.88em - 5px);
-            border-radius: 0.15em;
+            width: calc(1.65em - 5px);
+            height: calc(1.65em - 5px);
+            border-radius: 50%;
             cursor: pointer;
             margin: 2.5px;
             flex-shrink: 0;
@@ -163,12 +163,13 @@
         }
 
         .pcr-add {
-            font-size: 1em;
-            width: calc(1.88em - 5px);
-            height: calc(1.88em - 5px);
-            border-radius: 0.15em;
-            margin: 2.5px;
-            background-color: #464d52;
+            font-size: 1.2em;
+            width: calc(1.65em - 5px);
+            height: calc(1.65em - 5px);
+            border-radius: 50%;
+            margin: 0;
+            //background-color: #464d52;
+            background: none;
             color: #bbbdc3;
         }
     }
@@ -272,24 +273,6 @@
             padding: 0.45em 0.5em;
             margin-top: 0.75em;
         }
-
-        // 吸管功能
-        .pcr-dropper {
-            background: #464d52;
-            border: 1px solid #bbbdc3;
-            width: 25px; 
-            height: 25px;
-            font-size: 0.75em;
-            
-            margin-top: 0.75em;
-            border-radius: 0.2em;
-
-            .pcr-dropper-inner {
-                width: 100%;
-                height: 100%;
-                padding: 4px;
-            }
-        }
     }
 
     .pcr-selection {
@@ -328,37 +311,60 @@
         width: 100%;
         display: flex;
         align-items: center;
-        position: relative;
+        justify-content: flex-end;
 
         span {
-            flex: 1;
             height: 24px;
             line-height: 24px;
             color: #bbbdc3;
             font-size: 13px;
         }
 
-        input {
-            width: 50px;
-            padding: 0 3px;
-            height: 24px;
-            border-radius: 0.2em;
-            line-height: 24px;
-            background-color: #464d52;
-            color: #bbbdc3;
-            border: 1px solid #bbbdc3;
-            outline: none;            
-            -webkit-appearance: none;
-            -moz-appearance: textfield;            
+        .opacity-input {
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+
+            input {
+                width: 50px;
+                padding: 0 3px;
+                height: 24px;
+                border-radius: 0.2em;
+                line-height: 24px;
+                background-color: #464d52;
+                color: #bbbdc3;
+                border: 1px solid #bbbdc3;
+                outline: none;            
+                -webkit-appearance: none;
+                -moz-appearance: textfield;            
+            }
+
+            .append {
+                font-size: 10px;
+                line-height: 24px;
+                color: #b2b4b3;
+                position: absolute;
+                right: 6px;
+                top: 0px;
+            }
         }
-        .append {
-            font-size: 10px;
-            line-height: 24px;
-            color: #b2b4b3;
-            margin-left: -16px;
-            position: absolute;
-            right: 13px;
-            top: 10px;
+
+        // 吸管功能
+        .pcr-dropper {
+            background: #464d52;
+            border: 1px solid #bbbdc3;
+            width: 25px; 
+            height: 24px;
+            margin-left: 10px;
+            
+            border-radius: 0.2em;
+
+            .pcr-dropper-inner {
+                width: 100%;
+                height: 100%;
+                padding: 4px;
+            }
         }
     }
 }

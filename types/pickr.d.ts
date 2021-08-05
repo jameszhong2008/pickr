@@ -66,6 +66,7 @@ declare namespace Pickr {
         comparison?: boolean;
         default?: string;
         swatches?: Array<string> | null;
+        swatchesNum?: number;
         defaultRepresentation?: Representation;
         showAlways?: boolean;
         closeWithKey?: string;
