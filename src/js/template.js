@@ -62,8 +62,8 @@ export default instance => {
             <input :ref="result" class="pcr-result" type="text" spellcheck="false" ${hidden(components.interaction.input)} aria-label="${t('aria:input', 'color input field')}">
 
             <select :ref="select">
-              <option value="${lockOpacity ? 'HEX' : 'HEXA'}">HEXA</option>
-              <option value="${lockOpacity ? 'RGB' : 'RGBA'}">RGBA</option>
+              <option value="${lockOpacity ? 'HEX' : 'HEXA'}">HEX</option>
+              <option value="${lockOpacity ? 'RGB' : 'RGBA'}">RGB</option>
               <option value="CMYK">CMYK</option>
             </select>
             <input :arr="options" class="pcr-type" data-type="HEXA" value="${lockOpacity ? 'HEX' : 'HEXA'}" type="button" ${hidden(components.interaction.hex)}>

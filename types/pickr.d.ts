@@ -45,6 +45,8 @@ declare class Pickr {
     addSwatch(color: string): boolean;
 
     removeSwatch(index: number): boolean;
+
+    setCanClose(fn: (e: MouseEvent | TouchEvent) => boolean): void;
 }
 
 declare namespace Pickr {
@@ -72,6 +74,7 @@ declare namespace Pickr {
         closeWithKey?: string;
         position?: Position;
         adjustableNumbers?: boolean;
+        canClose?: (e: MouseEvent | TouchEvent) => boolean;
 
         components?: {
             palette?: boolean;

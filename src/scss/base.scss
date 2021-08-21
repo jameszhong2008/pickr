@@ -121,15 +121,15 @@
         @supports (display: grid) {
             display: grid;
             align-items: center;
-            grid-template-columns: repeat(auto-fit, 1.65em);
+            grid-template-columns: repeat(auto-fit, 1.71em);
         }
 
         > button {
             @include transparency-background(6px);
             font-size: 1em;
             position: relative;
-            width: calc(1.65em - 5px);
-            height: calc(1.65em - 5px);
+            width: calc(1.71em - 5px);
+            height: calc(1.71em - 5px);
             border-radius: 50%;
             cursor: pointer;
             margin: 2.5px;
@@ -164,11 +164,10 @@
 
         .pcr-add {
             font-size: 1.2em;
-            width: calc(1.65em - 5px);
-            height: calc(1.65em - 5px);
+            width: calc(1.71em - 5px);
+            height: calc(1.71em - 5px);
             border-radius: 50%;
             margin: 0;
-            //background-color: #464d52;
             background: none;
             color: #bbbdc3;
         }
@@ -199,11 +198,6 @@
             &:hover {
                 filter: brightness(0.975);
             }
-
-            // 去掉激活样式
-            /*&:focus {
-                @include focus();
-            }*/
         }
 
         .pcr-result {
@@ -307,24 +301,26 @@
 
     /* 输入透明度值*/
     .pcr-color-opacity-input {
-        padding: 10px 10px 0 63px;
+        padding: 0.6em 0.4em 0 0.6em;
         width: 100%;
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
         justify-content: flex-end;
 
-        span {
+        & > span {
             height: 24px;
             line-height: 24px;
             color: #bbbdc3;
             font-size: 13px;
+            margin-top: -2px;
         }
 
         .opacity-input {
             position: relative;
             display: flex;
             align-items: center;
-            margin-left: 10px;
+            margin-left: 8px;
 
             input {
                 width: 50px;
@@ -356,7 +352,9 @@
             border: 1px solid #bbbdc3;
             width: 25px; 
             height: 24px;
-            margin-left: 10px;
+            margin-left: 8px;
+
+            margin-right: 0.2em;
             
             border-radius: 0.2em;
 

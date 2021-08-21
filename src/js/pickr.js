@@ -67,7 +67,8 @@ export default class Pickr {
         adjustableNumbers: true,
         showAlways: false,
 
-        closeWithKey: 'Escape'
+        closeWithKey: 'Escape',
+        canClose: null,          // 判断是否可以关闭颜色框
     };
 
     // Will be used to prevent specific actions during initilization
@@ -374,6 +375,9 @@ export default class Pickr {
                 onchange(e) {
                     inst._representation = e.target.getAttribute('data-type').toUpperCase();
                     inst._recalc && inst._updateOutput('swatch');
+
+                    // 点击按钮同时设置select选中
+                    inst._setRepresentSelect(inst._representation);
                 }
             })
         };
@@ -409,6 +413,16 @@ export default class Pickr {
         }
         return color;
     }
+
+    _setRepresentSelect(utype) {
+        const represent_options = this._root.interaction.select.options;
+        for (let i = 0; i < represent_options.length; i++) {
+            if (represent_options[i].value == utype) {
+                represent_options[i].selected = true;
+            }
+        }
+    }
+                
 
     _bindEvents() {
         const {_root, options} = this;
@@ -529,6 +543,10 @@ export default class Pickr {
                 // Cancel selecting if the user taps behind the color picker
                 _.on(document, ['touchstart', 'mousedown'], e => {
                     if (this.isOpen() && !_.eventPath(e).some(el => el === _root.app || el === _root.button)) {
+                        // 判断是否可以关闭的回调函数，返回false则鼠标点击不关闭
+                        if(options.canClose && !options.canClose(e))
+                            return;
+
                         this.hide();
                     }
                 }, {capture: true})
@@ -960,6 +978,11 @@ export default class Pickr {
                 }
             }
 
+            if(target) {
+                // 设置select颜色模式
+                this._setRepresentSelect(utype);
+            }
+
             // Update color (fires 'save' event if silent is 'false')
             if (!this.setHSVA(...values, silent)) {
                 return false;
@@ -1036,5 +1059,16 @@ export default class Pickr {
         this.options.disabled = false;
         this._root.button.classList.remove('disabled');
         return this;
+    }
+
+    /**
+     * 设置判断是否可以关闭的回调函数，返回false则鼠标点击不关闭
+     * @param {*} fn 
+     */
+    setCanClose(fn) {
+        if(fn)
+            this.options.canClose = fn;
+        else
+            delete this.options.canClose;
     }
 }
